@@ -2,7 +2,7 @@
 
 @import helper._
 
-@main("Bookmark") {
+@main("Bookmark |") {
 	<h3> Welcome @username </h3>
 	
 	<ul>
@@ -10,7 +10,7 @@
 	   	<li> <b>user: </b> @bookmark.username | <b> url: </b> <a href="http://@bookmark.url"> @bookmark.url </a> </li>
 	   	}
 	</ul>
-	@helper.form(routes.Application.addBookmark()) {
+	@helper.form(routes.Application.addBookmark(), 'id->"addBookmark") {
 		@helper.inputText(inputBookmark("url"))
 		<input type="submit" value="Save Bookmark" />
 		}

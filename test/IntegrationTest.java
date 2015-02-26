@@ -20,9 +20,39 @@ public class IntegrationTest {
         running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
             public void invoke(TestBrowser browser) {
                 browser.goTo("http://localhost:3333");
-                assertThat(browser.pageSource()).contains("Your new application is ready.");
+                assertThat(browser.pageSource()).contains("Welcome to bookmark");
+                assertThat(browser.pageSource()).contains("Bookmark |");
             }
         });
     }
 
+  @Test
+    public void testUsername() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+            public void invoke(TestBrowser browser) {
+  
+                browser.goTo("http://localhost:3333/");
+                browser.fill("#name").with("test");
+                browser.submit("#nameForm");
+                assertThat(browser.pageSource()).contains("Welcome test");
+                assertThat(browser.pageSource()).contains("Save Bookmark");
+            }
+        });
+    }
+
+  @Test
+  public void testURL() {
+      running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+          public void invoke(TestBrowser browser) {
+
+              browser.goTo("http://localhost:3333/");
+              browser.fill("#name").with("test");
+              browser.submit("#nameForm");
+              
+              browser.fill("#url").with("www.bitcamp.ba");
+              browser.submit("#addBookmark");
+              assertThat(browser.pageSource()).contains("www.bitcamp.ba");
+          }
+      });
+  }
 }
